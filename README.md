@@ -1,8 +1,8 @@
 <!--![GitHub All Releases](https://img.shields.io/github/downloads/ali-zahedi/az-iranian-bank-gateways/total)-->
 <!--![GitHub issues](https://img.shields.io/github/issues/ali-zahedi/az-iranian-bank-gateways)-->
-![GitHub](https://img.shields.io/github/license/ali-zahedi/az-iranian-bank-gateways)
-![GitHub](https://img.shields.io/pypi/pyversions/az-iranian-bank-gateways.svg?maxAge=2592000)
-![GitHub](https://img.shields.io/pypi/v/az-iranian-bank-gateways.svg?maxAge=2592000)
+![GitHub](https://img.shields.io/github/license/ali-zahedi/az-messaging)
+![GitHub](https://img.shields.io/pypi/pyversions/az-messaging.svg?maxAge=2592000)
+![GitHub](https://img.shields.io/pypi/v/az-messaging.svg?maxAge=2592000)
 # AZ Messaging config
 
 [[_TOC_]]
