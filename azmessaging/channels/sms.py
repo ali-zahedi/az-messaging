@@ -25,8 +25,8 @@ class SMSNotificationChannel(BaseNotificationChannel):
         for item in phone_numbers:
             country_code = region_code_for_country_code(phone_number_parse(item).country_code)
             if country_code not in self._receivers:
-                self._receivers[country_code] = []
-            self._receivers[country_code].append(item)
+                self._receivers[country_code] = set()
+            self._receivers[country_code].add(item)
 
     def get_receivers(self):
         return self._receivers
