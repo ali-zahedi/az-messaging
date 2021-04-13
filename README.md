@@ -7,9 +7,11 @@
 
 [[_TOC_]]
 
+## Install with `pip`
 
-``pip install az-messaging``
-
+```shell script
+pip install az-messaging
+```
 
 ### settings.py
 
