@@ -77,6 +77,21 @@ AZ_MESSAGING = {
 python manage.py migrate
 ```
 
+### SMS
+
+#### How to use it?
+
+```python
+from azmessaging import default_settings as settings
+from azmessaging.models import SMSNotificationType
+identifier = 'what ever you want'
+message = 'Your code is: 1222'
+sms_type = SMSNotificationType.TRANSACTIONAL
+klass = settings.READER.klass('sms', identifier)
+sms = klass(identifier=identifier, message=message, sms_type=sms_type)
+sms.set_receivers(['+16503331111', '+37211123450', '+37211123451'])
+sms.notify()
+```
 
 # TODO
 
@@ -90,7 +105,9 @@ python manage.py migrate
 
 - [X] SMS Support Twilio
 
-- [X] SMS Base on country
+- [X] SMS Routing Base on country/continents
+
+- [x] SMS Support every provider you want.
 
 - [X] SMS Batch 
 
