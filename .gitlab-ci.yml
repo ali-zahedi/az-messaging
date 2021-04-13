@@ -1,7 +1,6 @@
 stages:
-  - fetch-version
+  - version
   - production
-  - release
 
 variables:
   AUTHOR: 'Ali Zahedigol'
@@ -17,17 +16,17 @@ variables:
     - python
 
 
-fetch-version:
+version:
   # Requires Node >= 10.13 version
   <<: *node
-  stage: fetch-version
+  stage: version
   only:
     refs:
     - master
     - develop
   script:
     - npm install @semantic-release/gitlab @semantic-release/exec @semantic-release/changelog
-    - npx semantic-release --generate-notes false --dry-run
+    - npx semantic-release
   artifacts:
     paths:
     - VERSION.txt
@@ -47,21 +46,4 @@ production:
     - master
     - develop
   dependencies:
-    - fetch-version
-
-release:
-  <<: *node
-  stage: release
-  only:
-    refs:
-    - master
-    - develop
-  script:
-    - touch CHANGELOG.md
-    - npm install @semantic-release/gitlab @semantic-release/changelog @semantic-release/exec
-    - npx semantic-release
-  artifacts:
-    paths:
-    - CHANGELOG.md
-  dependencies:
-    - production
+    - version

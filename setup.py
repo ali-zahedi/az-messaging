@@ -42,5 +42,8 @@ setup(
     install_requires=[
         'six',
         'Django>=2.2',
+        'phonenumberslite',
+        'boto3',
+        'twilio',
     ],
 )
