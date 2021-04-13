@@ -30,11 +30,8 @@ class DefaultReader(Reader):
     def get_sms_sender(self, identifier: str, country_code: str) -> SMSApi:
         continent = get_continent(country_code).upper()
         for sp_name in settings.SMS_CONFIG['PRIORITY_SERVICE_PROVIDER']:
-            kwargs = {}
+            kwargs = self._sms_config_reader(sp_name)
             sp = settings.SMS_CONFIG['SERVICE_PROVIDER'][sp_name]
-            kwargs.update(sp)
-            del kwargs['ROUTING']
-            del kwargs['CLASS']
             for r in sp['ROUTING']:
                 if continent in r['continents'] or country_code in r['countries']:
                     r_copy = r.copy()
@@ -43,3 +40,19 @@ class DefaultReader(Reader):
                     kwargs.update(r_copy)
                     klass = import_class(sp['CLASS'])
                     return klass(**kwargs)
+
+        # Default
+        sp_name = settings.SMS_CONFIG['DEFAULT_SERVICE_PROVIDER']
+        sp = settings.SMS_CONFIG['SERVICE_PROVIDER'][sp_name]
+        kwargs = self._sms_config_reader(sp_name)
+        klass = import_class(sp['CLASS'])
+        return klass(**kwargs)
+
+    @classmethod
+    def _sms_config_reader(cls, service_provider_name):
+        kwargs = {}
+        sp = settings.SMS_CONFIG['SERVICE_PROVIDER'][service_provider_name]
+        kwargs.update(sp)
+        del kwargs['ROUTING']
+        del kwargs['CLASS']
+        return kwargs
