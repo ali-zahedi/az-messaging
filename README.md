@@ -81,6 +81,8 @@ python manage.py migrate
 
 #### How to use it?
 
+Base on sample config, two sms send from `twilio` and one of them from `AWS-SNS` and region is `eu-west-1`.
+ 
 ```python
 from azmessaging import default_settings as settings
 from azmessaging.models import SMSNotificationType
