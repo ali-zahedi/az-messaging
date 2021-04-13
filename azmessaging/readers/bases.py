@@ -5,6 +5,7 @@ import six
 
 from azmessaging import default_settings as settings
 from azmessaging.sms import SMSApi
+from azmessaging.utils import import_class
 
 
 @six.add_metaclass(abc.ABCMeta)
@@ -33,7 +34,7 @@ class Reader:
         pass
 
     def klass(self, channel: str, identifier: str) -> dict:
-        return settings.CHANNEL_CLASS[channel.upper()]
+        return import_class(settings.CHANNEL_CLASS[channel.upper()])
 
     @abc.abstractmethod
     def get_sms_sender(self, identifier: str, country_code: str) -> SMSApi:
