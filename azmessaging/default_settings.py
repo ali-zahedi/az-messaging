@@ -4,6 +4,7 @@ from django.conf import settings
 import django
 
 from .exceptions import AZSettingDoesNotExist
+from .utils import import_class
 
 if django.__version__ >= '3.0':
     from django.db import models
@@ -25,6 +26,13 @@ CHANNEL_CLASS = getattr(
         'SMS': 'azmessaging.channels.SMSNotificationChannel',
     }
 )
+
+"""
+READER
+Load in app config after application loaded
+"""
+READER = None
+
 """
 SMS
 """
