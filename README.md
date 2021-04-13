@@ -49,7 +49,7 @@ AZ_MESSAGING = {
                 'CLASS': 'azmessaging.sms.SMSAPITwilio',
                 'ROUTING': [
                     {
-                        'countries': 'DE',
+                        'countries': 'DE, EE',
                         'sender': os.environ.get('TWILIO_EE_SENDER', None),
                     },
                     {
@@ -81,7 +81,7 @@ python manage.py migrate
 
 #### How to use it?
 
-Base on sample config, two sms send from `twilio` and one of them from `AWS-SNS` and region is `eu-west-1`.
+Base on sample config, two sms send from `twilio` with `TWILIO_EE_SENDER` number and one of them from `AWS-SNS` and region is `eu-west-1`.
  
 ```python
 from azmessaging import default_settings as settings
@@ -99,7 +99,7 @@ sms.notify()
 
 - [ ] Documentation
 
-- [ ] Support multiple provider 
+- [x] Support multiple provider 
 
 - [X] SMS Support
 
