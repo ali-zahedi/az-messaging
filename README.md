@@ -99,7 +99,7 @@ sms.notify()
 
 - [ ] Documentation
 
-- [ ] Support multiple provider 
+- [x] Support multiple provider 
 
 - [X] SMS Support
 
