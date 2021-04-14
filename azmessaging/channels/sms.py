@@ -22,8 +22,11 @@ class SMSNotificationChannel(BaseNotificationChannel):
 
     def set_receivers(self, phone_numbers: list):
         self._receivers = {}
+        config = self.reader.get_sms_config(self.identifier)
         for item in phone_numbers:
             country_code = region_code_for_country_code(phone_number_parse(item).country_code)
+            if country_code not in config.white_list_countries:
+                continue
             if country_code not in self._receivers:
                 self._receivers[country_code] = set()
             self._receivers[country_code].add(item)
@@ -37,4 +40,5 @@ class SMSNotificationChannel(BaseNotificationChannel):
     def notify(self):
         """Sends the notification."""
         for country_code in self.get_receivers():
-            self._send_msg(self.get_message(), phone_numbers=self.get_receivers()[country_code], country_code=country_code)
+            self._send_msg(self.get_message(), phone_numbers=self.get_receivers()[country_code],
+                           country_code=country_code)

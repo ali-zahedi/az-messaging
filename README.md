@@ -67,7 +67,9 @@ AZ_MESSAGING = {
         'PRIORITY_SERVICE_PROVIDER': [      # REQUIRED
             'TWILIO',
             'SNS',
-        ]
+        ],
+        'WHITE_LIST': '__all__',    # EXAMPLE = 'COUNTRY_CODE_1, COUNTRY_CODE_2' 
+        'BLACK_LIST': '__none__',   # EXAMPLE = '__all__' OR 'COUNTRY_CODE_3, COUNTRY_CODE_4'
     },
 }
  ```
