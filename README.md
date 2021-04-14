@@ -24,6 +24,7 @@ INSTALLED_APPS = [
 ]
 
 AZ_MESSAGING = {
+    'SETTING_VALUE_READER_CLASS': 'azmessaging.readers.DefaultReader',
     'CLASS': {
         'SMS': 'azmessaging.channels.SMSNotificationChannel',
     },
