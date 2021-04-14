@@ -24,6 +24,7 @@ INSTALLED_APPS = [
 ]
 
 AZ_MESSAGING = {
+    'SETTING_VALUE_READER_CLASS': 'azmessaging.readers.DefaultReader',
     'CLASS': {
         'SMS': 'azmessaging.channels.SMSNotificationChannel',
     },
@@ -78,6 +79,11 @@ python manage.py migrate
 ```
 
 ### SMS
+
+#### Support
+
+1. [SNS AWS](https://aws.amazon.com/sns/)
+1. [Twilio](https://www.twilio.com/sms)
 
 #### How to use it?
 
