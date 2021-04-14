@@ -79,6 +79,11 @@ python manage.py migrate
 
 ### SMS
 
+#### Support
+
+1. [SNS AWS](https://aws.amazon.com/sns/)
+1. [Twilio](https://www.twilio.com/sms)
+
 #### How to use it?
 
 Base on sample config, two sms send from `twilio` with `TWILIO_EE_SENDER` number and one of them from `AWS-SNS` and region is `eu-west-1`.
