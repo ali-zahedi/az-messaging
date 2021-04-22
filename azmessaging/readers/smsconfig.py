@@ -2,6 +2,12 @@ import pytz
 
 
 class SMSConfig:
+    _service_provider_class_path: dict
+    default_service_provider: str
+    priorities_service_provider: [str]
+    service_providers: dict
+    white_list_countries: [str]
+
     def __init__(self, default, priorities, service_providers, white_list_countries, black_list_countries):
         self.default_service_provider = default
         self.priorities_service_provider = priorities
@@ -27,7 +33,10 @@ class SMSConfig:
 
         self.white_list_countries = wlc - blc
 
-    default_service_provider: str
-    priorities_service_provider: [str]
-    service_providers: dict
-    white_list_countries: [str]
+    @classmethod
+    def get_service_provider_class_path(cls, service_provider_name) -> str:
+        return cls._service_provider_class_path.get(service_provider_name, None)
+
+    @classmethod
+    def set_service_provider_class_path(cls, service_providers_class_path):
+        cls._service_provider_class_path = service_providers_class_path

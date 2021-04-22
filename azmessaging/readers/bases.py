@@ -11,16 +11,19 @@ from azmessaging.utils import import_class, get_continent
 class Reader:
 
     @abc.abstractmethod
+    def get_sms_config_class(self) -> type(SMSConfig):
+        pass
+
+    @abc.abstractmethod
     def get_sms_config(self, identifier) -> SMSConfig:
         pass
 
     def klass(self, channel: str, identifier: str) -> dict:
         return import_class(settings.CHANNEL_CLASS[channel.upper()])
 
-    def get_sms_sender_klass(self, identifier, service_provider_name):
-        config = self.get_sms_config(identifier)
-        sp = config.service_providers[service_provider_name]
-        klass = import_class(sp['CLASS'])
+    def get_sms_sender_class(self, service_provider_name):
+        class_path = self.get_sms_config_class().get_service_provider_class_path(service_provider_name)
+        klass = import_class(class_path)
         return klass
 
     def get_sms_sender(self, identifier: str, country_code: str) -> str:
@@ -35,14 +38,14 @@ class Reader:
                     del r_copy['continents']
                     del r_copy['countries']
                     kwargs.update(r_copy)
-                    klass = self.get_sms_sender_klass(identifier, sp_name)
+                    klass = self.get_sms_sender_class(sp_name)
                     return klass(**kwargs)
 
         # Default
         sp_name = config.default_service_provider
         sp = config.service_providers[sp_name]
         kwargs = self._sms_constructor_parameter(config, sp_name)
-        klass = import_class(sp['CLASS'])
+        klass = self.get_sms_sender_class(sp_name)
         return klass(**kwargs)
 
     @classmethod

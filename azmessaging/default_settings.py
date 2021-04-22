@@ -49,12 +49,16 @@ if len(SMS_CONFIG) != 0:
         raise AZSettingDoesNotExist(
             'SMS configuration: please check `PRIORITY_SERVICE_PROVIDER` and `SERVICE_PROVIDER`')
 
+    from .readers.smsconfig import SMSConfig
+
+    sp_class = {}
     for sp_name in SMS_CONFIG['SERVICE_PROVIDER']:
         sp = SMS_CONFIG['SERVICE_PROVIDER'][sp_name]
         if not sp.get('CLASS', None):
             raise AZSettingDoesNotExist(
                 f'SMS configuration: please add `CLASS` on `{sp_name}`')
-
+        sp_class[sp_name] = sp.get('CLASS')
         for r in sp.get('ROUTING', []):
             r['countries'] = list(filter(None, [x.strip().upper() for x in r.get('countries', '').split(',')]))
             r['continents'] = list(filter(None, [x.strip().upper() for x in r.get('continents', '').split(',')]))
+    SMSConfig.set_service_provider_class_path(sp_class)

@@ -5,6 +5,9 @@ from .smsconfig import SMSConfig
 
 class DefaultReader(Reader):
 
+    def get_sms_config_class(self) -> type(SMSConfig):
+        return SMSConfig
+
     def get_sms_config(self, identifier) -> SMSConfig:
         return SMSConfig(
             default=settings.SMS_CONFIG['DEFAULT_SERVICE_PROVIDER'],
