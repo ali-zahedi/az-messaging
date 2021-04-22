@@ -17,6 +17,12 @@ class Reader:
     def klass(self, channel: str, identifier: str) -> dict:
         return import_class(settings.CHANNEL_CLASS[channel.upper()])
 
+    def get_sms_sender_klass(self, identifier, service_provider_name):
+        config = self.get_sms_config(identifier)
+        sp = config.service_providers[service_provider_name]
+        klass = import_class(sp['CLASS'])
+        return klass
+
     def get_sms_sender(self, identifier: str, country_code: str) -> str:
         config = self.get_sms_config(identifier)
         continent = get_continent(country_code).upper()
@@ -29,7 +35,7 @@ class Reader:
                     del r_copy['continents']
                     del r_copy['countries']
                     kwargs.update(r_copy)
-                    klass = import_class(sp['CLASS'])
+                    klass = self.get_sms_sender_klass(identifier, sp_name)
                     return klass(**kwargs)
 
         # Default
