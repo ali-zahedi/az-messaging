@@ -1,10 +1,9 @@
 """Default settings for messaging."""
 
-from django.conf import settings
 import django
+from django.conf import settings
 
 from .exceptions import AZSettingDoesNotExist
-from .utils import import_class
 
 if django.__version__ >= '3.0':
     from django.db import models
@@ -49,8 +48,6 @@ if len(SMS_CONFIG) != 0:
         raise AZSettingDoesNotExist(
             'SMS configuration: please check `PRIORITY_SERVICE_PROVIDER` and `SERVICE_PROVIDER`')
 
-    from .readers.smsconfig import SMSConfig
-
     sp_class = {}
     for sp_name in SMS_CONFIG['SERVICE_PROVIDER']:
         sp = SMS_CONFIG['SERVICE_PROVIDER'][sp_name]
@@ -61,4 +58,4 @@ if len(SMS_CONFIG) != 0:
         for r in sp.get('ROUTING', []):
             r['countries'] = list(filter(None, [x.strip().upper() for x in r.get('countries', '').split(',')]))
             r['continents'] = list(filter(None, [x.strip().upper() for x in r.get('continents', '').split(',')]))
-    SMSConfig.set_service_provider_class_path(sp_class)
+    SMS_CONFIG['SERVICE_PROVIDER_CLASS'] = sp_class

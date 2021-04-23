@@ -9,7 +9,7 @@ class DefaultReader(Reader):
         return SMSConfig
 
     def get_sms_config(self, identifier) -> SMSConfig:
-        return SMSConfig(
+        return self.get_sms_config_class()(
             default=settings.SMS_CONFIG['DEFAULT_SERVICE_PROVIDER'],
             priorities=settings.SMS_CONFIG['PRIORITY_SERVICE_PROVIDER'],
             service_providers=settings.SMS_CONFIG['SERVICE_PROVIDER'],

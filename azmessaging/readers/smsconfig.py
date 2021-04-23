@@ -1,8 +1,8 @@
 import pytz
+from azmessaging import default_settings as settings
 
 
 class SMSConfig:
-    _service_provider_class_path: dict
     default_service_provider: str
     priorities_service_provider: [str]
     service_providers: dict
@@ -35,8 +35,4 @@ class SMSConfig:
 
     @classmethod
     def get_service_provider_class_path(cls, service_provider_name) -> str:
-        return cls._service_provider_class_path.get(service_provider_name, None)
-
-    @classmethod
-    def set_service_provider_class_path(cls, service_providers_class_path):
-        cls._service_provider_class_path = service_providers_class_path
+        return settings.SMS_CONFIG['SERVICE_PROVIDER_CLASS'].get(service_provider_name, None)
