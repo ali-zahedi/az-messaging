@@ -17,7 +17,7 @@ setup(
     long_description=README,
     long_description_content_type='text/markdown',
     url='https://github.com/ali-zahedi/az-messaging',
-    author='Ali Zahedi Gol',
+    author='Ali Zahedigol',
     author_email='zahedi@aparnik.com',
     classifiers=[
         'Environment :: Web Environment',

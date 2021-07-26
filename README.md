@@ -27,6 +27,20 @@ AZ_MESSAGING = {
     'SETTING_VALUE_READER_CLASS': 'azmessaging.readers.DefaultReader',
     'CLASS': {
         'SMS': 'azmessaging.channels.SMSNotificationChannel',
+        'TELEGRAM': 'azmessaging.channels.TelegramNotificationChannel',
+    },
+    'TELEGRAM': {
+        'SERVICE_PROVIDER': {
+            'DEFAULT': {
+                'CLASS': 'azmessaging.telegram.TELEGRAMAPIDefaultAPI',
+                'api_key': os.environ.get('TELEGRAM_DEFAULT_API_KEY', None),
+                'api_server': os.environ.get('TELEGRAM_DEFAULT_API_SERVER', None),
+            },
+        },
+        'DEFAULT_SERVICE_PROVIDER': 'DEFAULT',  # REQUIRED
+        'PRIORITY_SERVICE_PROVIDER': [  # REQUIRED
+            'DEFAULT',
+        ],
     },
     'SMS': {
         'SERVICE_PROVIDER': {
@@ -103,6 +117,21 @@ sms.set_receivers(['+16503331111', '+37211123450', '+37211123451'])
 sms.notify()
 ```
 
+### Telegram
+
+
+#### How to use it?
+ 
+```python
+from azmessaging import default_settings as settings
+identifier = 'what ever you want'
+message = 'Your code is: 1222'
+klass = settings.READER.klass('telegram', identifier)
+telegram = klass(identifier=identifier, message=message)
+telegram.set_receivers(['user_a', 'user_b', ])
+telegram.notify()
+```
+
 # TODO
 
 - [ ] Documentation
@@ -127,7 +156,7 @@ sms.notify()
 
 - [ ] Websocket
 
-- [ ] Telegram bot
+- [X] Telegram
 
 ## Develop
 

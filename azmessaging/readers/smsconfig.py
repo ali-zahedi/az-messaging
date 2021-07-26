@@ -1,7 +1,13 @@
 import pytz
+from azmessaging import default_settings as settings
 
 
 class SMSConfig:
+    default_service_provider: str
+    priorities_service_provider: [str]
+    service_providers: dict
+    white_list_countries: [str]
+
     def __init__(self, default, priorities, service_providers, white_list_countries, black_list_countries):
         self.default_service_provider = default
         self.priorities_service_provider = priorities
@@ -27,7 +33,6 @@ class SMSConfig:
 
         self.white_list_countries = wlc - blc
 
-    default_service_provider: str
-    priorities_service_provider: [str]
-    service_providers: dict
-    white_list_countries: [str]
+    @classmethod
+    def get_service_provider_class_path(cls, service_provider_name) -> str:
+        return settings.SMS_CONFIG['SERVICE_PROVIDER_CLASS'].get(service_provider_name, None)
