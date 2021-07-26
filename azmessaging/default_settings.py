@@ -16,10 +16,9 @@ else:
 
 MESSAGING = getattr(settings, 'AZ_MESSAGING', {})
 
-SETTING_VALUE_READER_CLASS = getattr(MESSAGING, 'SETTING_VALUE_READER_CLASS', 'azmessaging.readers.DefaultReader')
+SETTING_VALUE_READER_CLASS = MESSAGING.get('SETTING_VALUE_READER_CLASS', 'azmessaging.readers.DefaultReader')
 
-CHANNEL_CLASS = getattr(
-    MESSAGING,
+CHANNEL_CLASS = MESSAGING.get(
     'CLASS',
     {
         'SMS': 'azmessaging.channels.SMSNotificationChannel',
