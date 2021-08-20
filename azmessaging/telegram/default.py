@@ -13,6 +13,6 @@ class TELEGRAMAPIDefaultAPI(TelegramApi):
         for username in usernames:
             self.send(username, message)
 
-    def send(self, phone_number: str, message: str):
+    def send(self, username: str, message: str):
         # TODO: handle send by your self
         raise NotImplementedError("You must Implement by your self to send to telegram")

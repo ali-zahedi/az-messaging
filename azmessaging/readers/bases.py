@@ -65,6 +65,7 @@ class Reader:
                     r_copy = r.copy()
                     del r_copy['continents']
                     del r_copy['countries']
+                    r_copy = dict(filter(lambda sub: sub[1], r_copy.items()))
                     kwargs.update(r_copy)
                     klass = self.get_sms_sender_class(sp_name)
                     return klass(**kwargs)

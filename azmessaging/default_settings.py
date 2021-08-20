@@ -16,10 +16,9 @@ else:
 
 MESSAGING = getattr(settings, 'AZ_MESSAGING', {})
 
-SETTING_VALUE_READER_CLASS = getattr(MESSAGING, 'SETTING_VALUE_READER_CLASS', 'azmessaging.readers.DefaultReader')
+SETTING_VALUE_READER_CLASS = MESSAGING.get('SETTING_VALUE_READER_CLASS', 'azmessaging.readers.DefaultReader')
 
-CHANNEL_CLASS = getattr(
-    MESSAGING,
+CHANNEL_CLASS = MESSAGING.get(
     'CLASS',
     {
         'SMS': 'azmessaging.channels.SMSNotificationChannel',
@@ -39,6 +38,7 @@ SMS
 SMS_CONFIG = MESSAGING.get('SMS', {})
 if len(SMS_CONFIG) != 0:
     SMS_CONFIG['WHITE_LIST'] = SMS_CONFIG.get('WHITE_LIST', '__all__')
+    SMS_CONFIG['BLACK_LIST'] = SMS_CONFIG.get('BLACK_LIST', '__none__')
     if not SMS_CONFIG.get('DEFAULT_SERVICE_PROVIDER', None) or \
             len(SMS_CONFIG.get('SERVICE_PROVIDER', {}).get(SMS_CONFIG['DEFAULT_SERVICE_PROVIDER'], {})) == 0:
         raise AZSettingDoesNotExist('SMS configuration: please check `DEFAULT_SERVICE_PROVIDER` and `SERVICE_PROVIDER`')
