@@ -28,6 +28,7 @@ AZ_MESSAGING = {
     'CLASS': {
         'SMS': 'azmessaging.channels.SMSNotificationChannel',
         'TELEGRAM': 'azmessaging.channels.TelegramNotificationChannel',
+        'PUSH': 'azmessaging.channels.PushNotificationChannel',
     },
     'TELEGRAM': {
         'SERVICE_PROVIDER': {
@@ -84,6 +85,18 @@ AZ_MESSAGING = {
         ],
         'WHITE_LIST': '__all__',    # EXAMPLE = 'COUNTRY_CODE_1, COUNTRY_CODE_2' 
         'BLACK_LIST': '__none__',   # EXAMPLE = '__all__' OR 'COUNTRY_CODE_3, COUNTRY_CODE_4'
+    },
+    'PUSH': {
+        'SERVICE_PROVIDER': {
+            'FCMDJANGO': {
+                'CLASS': 'azmessaging.pushnotifications.fcmdjango.FCMDjangoAPI',
+                'api_key': os.environ.get('FCM_SERVER_KEY', None),
+            },
+        },
+        'DEFAULT_SERVICE_PROVIDER': 'FCMDJANGO',  # REQUIRED
+        'PRIORITY_SERVICE_PROVIDER': [  # REQUIRED
+            'FCMDJANGO',
+        ],
     },
 }
  ```
@@ -150,7 +163,7 @@ telegram.notify()
 
 - [X] SMS Batch 
 
-- [ ] Push notification
+- [X] Push notification
 
 - [ ] Console
 

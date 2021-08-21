@@ -23,6 +23,7 @@ CHANNEL_CLASS = MESSAGING.get(
     {
         'SMS': 'azmessaging.channels.SMSNotificationChannel',
         'TELEGRAM': 'azmessaging.channels.TelegramNotificationChannel',
+        'PUSH': 'azmessaging.channels.PushNotificationChannel',
     }
 )
 
@@ -84,3 +85,27 @@ if len(TELEGRAM_CONFIG) != 0:
                 f'Telegram configuration: please add `CLASS` on `{tp_name}`')
         tp_class[tp_name] = tp.get('CLASS')
     TELEGRAM_CONFIG['SERVICE_PROVIDER_CLASS'] = tp_class
+
+"""
+PUSH_NOTIFICATION
+"""
+PUSH_NOTIFICATION_CONFIG = MESSAGING.get('PUSH', {})
+if len(PUSH_NOTIFICATION_CONFIG) != 0:
+    if not PUSH_NOTIFICATION_CONFIG.get('DEFAULT_SERVICE_PROVIDER', None) or \
+            len(PUSH_NOTIFICATION_CONFIG.get('SERVICE_PROVIDER', {}).get(PUSH_NOTIFICATION_CONFIG['DEFAULT_SERVICE_PROVIDER'], {})) == 0:
+        raise AZSettingDoesNotExist('Push notification configuration: please check `DEFAULT_SERVICE_PROVIDER` and `SERVICE_PROVIDER`')
+
+    if len(PUSH_NOTIFICATION_CONFIG.get('PRIORITY_SERVICE_PROVIDER', [])) == 0 or \
+            len(list(filter(lambda x: PUSH_NOTIFICATION_CONFIG['SERVICE_PROVIDER'].get(x),
+                            PUSH_NOTIFICATION_CONFIG['PRIORITY_SERVICE_PROVIDER']))) != len(PUSH_NOTIFICATION_CONFIG['PRIORITY_SERVICE_PROVIDER']):
+        raise AZSettingDoesNotExist(
+            'Push notification configuration: please check `PRIORITY_SERVICE_PROVIDER` and `SERVICE_PROVIDER`')
+
+    tp_class = {}
+    for tp_name in PUSH_NOTIFICATION_CONFIG['SERVICE_PROVIDER']:
+        tp = PUSH_NOTIFICATION_CONFIG['SERVICE_PROVIDER'][tp_name]
+        if not tp.get('CLASS', None):
+            raise AZSettingDoesNotExist(
+                f'Push notification configuration: please add `CLASS` on `{tp_name}`')
+        tp_class[tp_name] = tp.get('CLASS')
+    PUSH_NOTIFICATION_CONFIG['SERVICE_PROVIDER_CLASS'] = tp_class
