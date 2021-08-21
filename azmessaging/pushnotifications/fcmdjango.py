@@ -23,6 +23,7 @@ class FCMDjangoAPI(PushNotificationAPI):
                 title=title,
                 body=body,
                 icon=image_url,
+                data=payload_data,
                 api_key=self.api_key,
             )
             # TODO: handle response to log and etc...
