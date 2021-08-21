@@ -9,28 +9,26 @@ class PushNotificationAPI:
         pass
 
     @abc.abstractmethod
-    def send(self, title: str, body: str, image_url: str, token: str, extra_data: dict, payload_data: dict):
+    def send(self, title: str, message: str, image_url: str, receiver: str, payload_data: dict):
         """
 
         :param title:
-        :param body:
+        :param message:
         :param image_url:
-        :param token:
-        :param extra_data: use for main body of notification
+        :param receiver:
         :param payload_data: use for data in push notification
         :return:
         """
         pass
 
     @abc.abstractmethod
-    def bulk_send(self, title: str, body: str, image_url: str, tokens: list, extra_data: dict, payload_data: dict):
+    def bulk_send(self, title: str, message: str, image_url: str, receivers: list, payload_data: dict):
         """
 
         :param title:
-        :param body:
+        :param message:
         :param image_url:
-        :param tokens:
-        :param extra_data: use for main body of notification
+        :param receivers:
         :param payload_data: use for data in push notification
         :return:
         """

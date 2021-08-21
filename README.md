@@ -145,6 +145,23 @@ telegram.set_receivers(['user_a', 'user_b', ])
 telegram.notify()
 ```
 
+### Push notification
+
+
+#### How to use it?
+ 
+```python
+from azmessaging import default_settings as settings
+identifier = 'what ever you want'
+message = 'Your code is: 1222'
+title = 'OTP'
+image_url = 'https://example.com/1.png' 
+klass = settings.READER.klass('push', identifier)
+push_notification = klass(identifier=identifier, message=message, title=title, image_url=image_url, payload_data={})
+push_notification.set_receivers(['user_a', 'user_b', ])
+push_notification.notify()
+```
+
 # TODO
 
 - [ ] Documentation

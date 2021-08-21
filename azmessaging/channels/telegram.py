@@ -14,7 +14,7 @@ class TelegramNotificationChannel(BaseNotificationChannel):
 
     def _send_msg(self, message, users):
         sender = self.reader.get_telegram_sender(self.identifier)
-        sender.bulk_send(users, message)
+        sender.bulk_send(users, message,,
 
     def get_message(self):
         return self.raw_message

@@ -14,14 +14,15 @@ class FCMDjangoAPI(PushNotificationAPI):
         super(FCMDjangoAPI, self).__init__(**kwargs)
         self.api_key = api_key
 
-    def bulk_send(self, title: str, body: str, image_url: str, tokens: list, extra_data: dict, payload_data: dict):
+    def bulk_send(self, title: str, message: str, image_url: str, receivers: list,
+                  payload_data: dict):
         try:
             fcm_devices = FCMDevice.objects.filter(
-                registration_id__in=tokens,
+                registration_id__in=receivers,
             ).distinct()
             sent_result = fcm_devices.send_message(
                 title=title,
-                body=body,
+                body=message,
                 icon=image_url,
                 data=payload_data,
                 api_key=self.api_key,
@@ -33,5 +34,5 @@ class FCMDjangoAPI(PushNotificationAPI):
             # TODO: handle response to log and etc...
             pass
 
-    def send(self, title: str, body: str, image_url: str, token: str, extra_data: dict, payload_data: dict):
-        self.bulk_send(title, body, image_url, [token], extra_data, payload_data)
+    def send(self, title: str, message: str, image_url: str, receiver: str, payload_data: dict):
+        self.bulk_send(title, message, image_url, [receiver], payload_data)
