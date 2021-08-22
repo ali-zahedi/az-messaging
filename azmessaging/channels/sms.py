@@ -18,7 +18,7 @@ class SMSNotificationChannel(BaseNotificationChannel):
 
     def _send_msg(self, message, phone_numbers, country_code):
         sender = self.reader.get_sms_sender(self.identifier, country_code=country_code)
-        sender.bulk_send(phone_numbers, message, self.sms_type,,
+        sender.bulk_send(phone_numbers, message, self.sms_type)
 
     def set_receivers(self, phone_numbers: list):
         self._receivers = {}
