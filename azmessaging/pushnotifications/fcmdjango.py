@@ -18,6 +18,7 @@ class FCMDjangoAPI(PushNotificationAPI):
                   payload_data: dict):
         try:
             fcm_devices = FCMDevice.objects.filter(
+                active=True,
                 registration_id__in=receivers,
             ).distinct()
             sent_result = fcm_devices.send_message(
