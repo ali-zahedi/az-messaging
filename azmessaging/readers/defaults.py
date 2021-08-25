@@ -1,10 +1,21 @@
 from azmessaging import default_settings as settings
 from .bases import Reader
-from .smsconfig import SMSConfig
-from .telegramconfig import TelegramConfig
+from .sms import SMSReaderMixin, SMSConfig
+from .telegram import TelegramReaderMixin, TelegramConfig
+from .pushnotifications import PushNotificationReaderMixin, PushNotificationConfig
 
 
-class DefaultReader(Reader):
+class DefaultReader(Reader, SMSReaderMixin, TelegramReaderMixin, PushNotificationReaderMixin):
+
+    def get_push_notification_config_class(self) -> type(PushNotificationConfig):
+        return PushNotificationConfig
+
+    def get_push_notification_config(self, identifier) -> PushNotificationConfig:
+        return self.get_push_notification_config_class()(
+            default=settings.PUSH_NOTIFICATION_CONFIG['DEFAULT_SERVICE_PROVIDER'],
+            priorities=settings.PUSH_NOTIFICATION_CONFIG['PRIORITY_SERVICE_PROVIDER'],
+            service_providers=settings.PUSH_NOTIFICATION_CONFIG['SERVICE_PROVIDER'],
+        )
 
     def get_telegram_config(self, identifier) -> TelegramConfig:
         return self.get_telegram_config_class()(

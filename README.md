@@ -28,6 +28,7 @@ AZ_MESSAGING = {
     'CLASS': {
         'SMS': 'azmessaging.channels.SMSNotificationChannel',
         'TELEGRAM': 'azmessaging.channels.TelegramNotificationChannel',
+        'PUSH': 'azmessaging.channels.PushNotificationChannel',
     },
     'TELEGRAM': {
         'SERVICE_PROVIDER': {
@@ -85,6 +86,18 @@ AZ_MESSAGING = {
         'WHITE_LIST': '__all__',    # EXAMPLE = 'COUNTRY_CODE_1, COUNTRY_CODE_2' 
         'BLACK_LIST': '__none__',   # EXAMPLE = '__all__' OR 'COUNTRY_CODE_3, COUNTRY_CODE_4'
     },
+    'PUSH': {
+        'SERVICE_PROVIDER': {
+            'FCMDJANGO': {
+                'CLASS': 'azmessaging.pushnotifications.fcmdjango.FCMDjangoAPI',
+                'api_key': os.environ.get('FCM_SERVER_KEY', None),
+            },
+        },
+        'DEFAULT_SERVICE_PROVIDER': 'FCMDJANGO',  # REQUIRED
+        'PRIORITY_SERVICE_PROVIDER': [  # REQUIRED
+            'FCMDJANGO',
+        ],
+    },
 }
  ```
 
@@ -132,6 +145,23 @@ telegram.set_receivers(['user_a', 'user_b', ])
 telegram.notify()
 ```
 
+### Push notification
+
+
+#### How to use it?
+ 
+```python
+from azmessaging import default_settings as settings
+identifier = 'what ever you want'
+message = 'Your code is: 1222'
+title = 'OTP'
+image_url = 'https://example.com/1.png' 
+klass = settings.READER.klass('push', identifier)
+push_notification = klass(identifier=identifier, message=message, title=title, image_url=image_url, payload_data={})
+push_notification.set_receivers(['user_a', 'user_b', ])
+push_notification.notify()
+```
+
 # TODO
 
 - [ ] Documentation
@@ -150,7 +180,7 @@ telegram.notify()
 
 - [X] SMS Batch 
 
-- [ ] Push notification
+- [X] Push notification
 
 - [ ] Console
 
